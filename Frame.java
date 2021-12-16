@@ -1,12 +1,12 @@
 import java.awt.Color;
 
 import javax.swing.JFrame;
-import java.awt.Container;
+//import java.awt.Container;
 
 
 public class Frame extends JFrame {
-    Container container;
-    GamePanel titleScreen;
+    //Container container;
+    TitleScreenPanel titleScreen;
 
     Frame() {
         super.setTitle("Snake Game");
@@ -17,14 +17,11 @@ public class Frame extends JFrame {
         super.setLayout(null);
         super.getContentPane().setBackground(Color.BLACK);
         super.setLocationRelativeTo(null);
-        container = super.getContentPane();
-        
-        GamePanel titleScreen = new GamePanel();
 
-        container.add(titleScreen.titlePanel);
-        container.add(titleScreen.highScorePanel);
-        container.add(titleScreen.startButtonPanel);
-        container.add(titleScreen.exitButtonPanel);
-        // super.pack();
+        TitleScreenPanel titleScreenPanel = new TitleScreenPanel();
+        this.add(titleScreenPanel.titlePanel);
+        this.add(titleScreenPanel.highScorePanel);
+        this.add(titleScreenPanel.startButtonPanel);
+        this.add(titleScreenPanel.exitButtonPanel);
     }
 }
