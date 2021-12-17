@@ -1,12 +1,14 @@
 import java.awt.Color;
 
 import javax.swing.JFrame;
-//import java.awt.Container;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Frame extends JFrame {
-    //Container container;
-    TitleScreenPanel titleScreen;
+    // Container container;
+    TitleScreenPanel titleScreenPanel;
+    GamePanel gamePanel;
+    TitleScreenListener titleScreenListener = new TitleScreenListener();
 
     Frame() {
         super.setTitle("Snake Game");
@@ -18,10 +20,28 @@ public class Frame extends JFrame {
         super.getContentPane().setBackground(Color.BLACK);
         super.setLocationRelativeTo(null);
 
-        TitleScreenPanel titleScreenPanel = new TitleScreenPanel();
+        titleScreenPanel = new TitleScreenPanel();
         this.add(titleScreenPanel.titlePanel);
         this.add(titleScreenPanel.highScorePanel);
         this.add(titleScreenPanel.startButtonPanel);
         this.add(titleScreenPanel.exitButtonPanel);
+        titleScreenPanel.startButton.addActionListener(titleScreenListener);
+        titleScreenPanel.exitButton.addActionListener((event) -> System.exit(0));
+    }
+
+    public void createGamePanel() {
+        this.titleScreenPanel.titlePanel.setVisible(false);
+        this.titleScreenPanel.highScorePanel.setVisible(false);
+        this.titleScreenPanel.startButtonPanel.setVisible(false);
+        this.titleScreenPanel.exitButtonPanel.setVisible(false);
+        gamePanel = new GamePanel();
+        this.add(gamePanel);
+
+    }
+
+    public class TitleScreenListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            createGamePanel();
+        }
     }
 }

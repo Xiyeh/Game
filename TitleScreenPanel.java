@@ -7,8 +7,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Container;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+// import java.awt.event.ActionEvent;
+// import java.awt.event.ActionListener;
 
 public class TitleScreenPanel {
     JFrame frame;
@@ -21,7 +21,6 @@ public class TitleScreenPanel {
     Font highScoreLabelFont = new Font("Papyrus", Font.BOLD, 50);
     Font ButtonFont = new Font("Papyrus", Font.BOLD, 40);
     JButton startButton, exitButton;
-    TitleScreenListener titleScreenListener = new TitleScreenListener();
     int highScore = 0;
 
     TitleScreenPanel() {
@@ -46,7 +45,6 @@ public class TitleScreenPanel {
         startButtonPanel.setBackground(Color.black);
         startButton = new JButton("Start");
         startButton.setFont(ButtonFont);
-        startButton.addActionListener(titleScreenListener);
         startButtonPanel.add(startButton);
 
         exitButtonPanel = new JPanel();
@@ -54,21 +52,6 @@ public class TitleScreenPanel {
         exitButtonPanel.setBackground(Color.black);
         exitButton = new JButton("Exit");
         exitButton.setFont(ButtonFont);
-        exitButton.addActionListener((event) -> System.exit(0));
         exitButtonPanel.add(exitButton);
     }
-
-    public void createGamePanel() {
-        titlePanel.setVisible(false);
-        highScorePanel.setVisible(false);
-        startButtonPanel.setVisible(false);
-        exitButtonPanel.setVisible(false);
-    }
-
-    public class TitleScreenListener implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            createGamePanel();
-        }
-    }
 }
-
