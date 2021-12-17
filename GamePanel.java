@@ -11,9 +11,11 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int panelHeight = 600;
     static final int snakeWidth = 20;
     static final int appleSize = 20;
+    static final int numOfGrid = (panelWidth * panelHeight) / (snakeWidth * snakeWidth);
 
     Random random;
     Apple apple = new Apple();
+    Snake snake;
 
     GamePanel() {
         random = new Random();
@@ -21,6 +23,7 @@ public class GamePanel extends JPanel implements ActionListener {
         super.setBackground(Color.blue);
         this.setFocusable(true);
         apple.newApple();
+        snake = new Snake();
         // super.add(apple);
         setVisible(true);
     }
@@ -40,14 +43,11 @@ public class GamePanel extends JPanel implements ActionListener {
         class SnakeSegment extends JPanel {
             int xCoordSS;
             int yCoordSS;
+            Graphics2D g2d;
 
             SnakeSegment(int xCoord, int yCoord) {
                 xCoordSS = xCoord;
                 yCoordSS = yCoord;
-            }
-
-            SnakeSegment() {
-
             }
 
         }
@@ -61,9 +61,26 @@ public class GamePanel extends JPanel implements ActionListener {
         SnakeSegment snakeSegmentList[];
 
         Snake() {
-            snakeSegmentList = new SnakeSegment[(panelWidth * panelHeight) / (snakeWidth * snakeWidth)];
+            snakeSegmentList = new SnakeSegment[numOfGrid];
             SnakeSegment head = new SnakeSegment(300, 300);
             snakeSegmentList[0] = head;
+            direction = "Right";
+            repaint();
+        }
+
+        // Loops through snakeSegmentList[] and draws each segment
+        public void paintComponent(Graphics g) {
+            SnakeSegment tempSegment;
+            for (int i = 0; i < numOfGrid; i++) {
+                if (snakeSegmentList[i] == null) {
+                    break;
+                }
+                tempSegment = snakeSegmentList[i];
+                tempSegment.g2d = (Graphics2D) g;
+                tempSegment.g2d.setColor(Color.green);
+                snakeSegmentList[i].g2d.fillRect(tempSegment.xCoordSS, tempSegment.yCoordSS, snakeWidth, snakeWidth);
+
+            }
         }
     }
 
@@ -72,6 +89,7 @@ public class GamePanel extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.red);
         g2d.fillRect(apple.XCoordinate, apple.YCoordinate, appleSize, appleSize);
+        snake.paintComponent(g);
     }
 
     public void actionPerformed(ActionEvent e) {
