@@ -7,8 +7,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Container;
 
-// import java.awt.event.ActionEvent;
-// import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class TitleScreenPanel {
     JFrame frame;
@@ -31,6 +31,7 @@ public class TitleScreenPanel {
         titleLabel = new JLabel("Snake Game");
         titleLabel.setForeground(Color.black);
         titleLabel.setFont(titleLabelFont);
+        titlePanel.add(titleLabel);
 
         highScorePanel = new JPanel();
         highScorePanel.setBounds(75, 175, 425, 100);
@@ -38,6 +39,7 @@ public class TitleScreenPanel {
         highScoreLabel = new JLabel("High Score : " + String.valueOf(highScore));
         highScoreLabel.setForeground(Color.black);
         highScoreLabel.setFont(highScoreLabelFont);
+        highScorePanel.add(highScoreLabel);
 
         startButtonPanel = new JPanel();
         startButtonPanel.setBounds(200, 325, 200, 100);
@@ -45,6 +47,7 @@ public class TitleScreenPanel {
         startButton = new JButton("Start");
         startButton.setFont(ButtonFont);
         startButton.addActionListener(titleScreenListener);
+        startButtonPanel.add(startButton);
 
         exitButtonPanel = new JPanel();
         exitButtonPanel.setBounds(200, 425, 200, 100);
@@ -52,30 +55,20 @@ public class TitleScreenPanel {
         exitButton = new JButton("Exit");
         exitButton.setFont(ButtonFont);
         exitButton.addActionListener((event) -> System.exit(0));
-        
         exitButtonPanel.add(exitButton);
-        startButtonPanel.add(startButton);
-        titlePanel.add(titleLabel);
-        highScorePanel.add(highScoreLabel);
-        // container.add(titlePanel);
     }
 
-    // public void createTitlePanel() {
-    // //Title
-    // super.setBounds(0, 100, 600, 150);
-    // super.setBackground(Color.GREEN);
-    // titleLabel = new JLabel("Snake Game");
-    // titleLabel.setForeground(Color.WHITE);
-    // titleLabel.setFont(titleFont);
-    // super.add(titleLabel);
+    public void createGamePanel() {
+        titlePanel.setVisible(false);
+        highScorePanel.setVisible(false);
+        startButtonPanel.setVisible(false);
+        exitButtonPanel.setVisible(false);
+    }
 
-    // //Start Panel
-    // Panel startPanel = new Panel();
-    // startPanel.setBounds(0, 400, 600, 150);
-    // startPanel.setBackground(Color.GREEN);
-
-    // //Close Panel
-
-    // }
-
+    public class TitleScreenListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            createGamePanel();
+        }
+    }
 }
+
