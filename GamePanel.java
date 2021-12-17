@@ -80,7 +80,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 tempSegment = segments.get(i);
                 tempSegment.g2d = (Graphics2D) g;
                 tempSegment.g2d.setColor(Color.green);
-                segments.get(i).g2d.fillRect(tempSegment.xCoordSS, tempSegment.yCoordSS, snakeWidth, snakeWidth);
+                tempSegment.g2d.fillRect(tempSegment.xCoordSS, tempSegment.yCoordSS, snakeWidth, snakeWidth);
 
             }
         }
