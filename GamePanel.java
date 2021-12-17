@@ -11,8 +11,7 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int panelHieght = 600;
     static final int snakeWidth = 20;
     static final int appleSize = 20;
-    int appleXCoordinate;
-    int appleYCoordinate;
+
     Random random;
     Apple apple = new Apple();
 
@@ -27,10 +26,12 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public class Apple {
+        int XCoordinate;
+        int YCoordinate;
 
         public void newApple() {
-            appleXCoordinate = random.nextInt((int) ((panelWidth / appleSize) - 1)) * appleSize;
-            appleYCoordinate = random.nextInt((int) ((panelWidth / appleSize) - 1)) * appleSize;
+            XCoordinate = random.nextInt((int) ((panelWidth / appleSize) - 1)) * appleSize;
+            YCoordinate = random.nextInt((int) ((panelWidth / appleSize) - 1)) * appleSize;
         }
     }
 
@@ -38,7 +39,7 @@ public class GamePanel extends JPanel implements ActionListener {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.red);
-        g2d.fillRect(appleXCoordinate, appleYCoordinate, appleSize, appleSize);
+        g2d.fillRect(apple.XCoordinate, apple.YCoordinate, appleSize, appleSize);
     }
 
     public void actionPerformed(ActionEvent e) {
