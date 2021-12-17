@@ -14,19 +14,23 @@ public class GamePanel extends JPanel implements ActionListener {
     int appleXCoordinate;
     int appleYCoordinate;
     Random random;
+    Apple apple = new Apple();
 
     GamePanel() {
         random = new Random();
         super.setBounds(0, 0, panelWidth, panelHieght);
         super.setBackground(Color.blue);
         this.setFocusable(true);
-        newApple();
+        apple.newApple();
         // super.add(apple);
     }
 
-    public void newApple() {
-        appleXCoordinate = random.nextInt((int)(panelWidth / appleSize)) * appleSize;
-        appleYCoordinate = random.nextInt((int)(panelWidth / appleSize)) * appleSize;
+    public class Apple {
+
+        public void newApple() {
+            appleXCoordinate = random.nextInt((int) ((panelWidth / appleSize) - 1)) * appleSize;
+            appleYCoordinate = random.nextInt((int) ((panelWidth / appleSize) - 1)) * appleSize;
+        }
     }
 
     public void paintComponent(Graphics g) {
