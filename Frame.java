@@ -43,6 +43,16 @@ public class Frame extends JFrame {
     public class TitleScreenListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             createGamePanel();
+            loop();
+        }
+    }
+
+    public void loop() {
+        for (int i = 0; i < 15; i++) {
+            gamePanel.updateSnake();
+            gamePanel.repaint();
+            super.repaint();
+
         }
     }
 

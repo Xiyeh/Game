@@ -17,7 +17,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     Random random;
     Apple apple;
-    Snake snake;
+    Snake snake = new Snake();
     String direction;
 
     GamePanel() {
@@ -27,8 +27,6 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setFocusable(true);
 
         apple = new Apple();
-
-        snake = new Snake();
         setVisible(true);
     }
 
@@ -85,14 +83,12 @@ public class GamePanel extends JPanel implements ActionListener {
             segments.addFirst(head);
             direction = "Right";
 
-            while (!gameOver) {
-                updateSnake();
-                try {
-                    wait(500);
-                }
-                
-            }
             repaint();
+        }
+
+        public SnakeSegment createSegment(int x, int y) {
+            SnakeSegment newSegment = new SnakeSegment(x, y);
+            return newSegment;
         }
 
         // Loops through snakeSegmentList[] and draws each segment
@@ -109,7 +105,12 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void updateSnake() {
-        snake.segments.addFirst(snake.segments.getFirst() + snakeWidth);
+        try {
+            System.out.println("LOOP");
+            Thread.sleep(50);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         int changeX;
         int changeY;
         if (direction.equals("Right")) {
@@ -126,14 +127,14 @@ public class GamePanel extends JPanel implements ActionListener {
             changeY = -snakeWidth;
         }
 
-        for (int i = snake.segments.size(); i > 0; i--) {
-            snake.segments.get(i).xCoordSS = snake.segments.get(i - 1).xCoordSS;
-        }
+        // for (int i = snake.segments.size(); i > 0; i--) {
+        // snake.segments.get(i).xCoordSS = snake.segments.get(i - 1).xCoordSS;
+        // }
 
-        snake.SnakeSegment newHead = new
-        snake.SnakeSegment(snake.segments.getFirst().xCoordSS + changeX,
-        snake.segments.getFirst().yCoordSS + changeY)
-        snake.segments.addFirst(newHead);
+        snake.segments.removeLast();
+
+        snake.segments.addFirst(snake.createSegment(snake.segments.getFirst().xCoordSS + changeX,
+                snake.segments.getFirst().yCoordSS + changeY));
         repaint();
     }
 
