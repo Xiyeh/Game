@@ -23,6 +23,7 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setFocusable(true);
         apple.newApple();
         // super.add(apple);
+        setVisible(true);
     }
 
     public class Apple {

@@ -36,6 +36,7 @@ public class Frame extends JFrame {
         this.titleScreenPanel.exitButtonPanel.setVisible(false);
         gamePanel = new GamePanel();
         this.add(gamePanel);
+        super.setVisible(true);
 
     }
 

@@ -1,7 +1,7 @@
 public class SnakeGame {
     public static void main(String[] args) {
-        new Frame();
+        Frame frame = new Frame();
+        frame.setVisible(true);
     }
 
 }
-
