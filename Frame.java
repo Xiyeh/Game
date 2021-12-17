@@ -45,4 +45,9 @@ public class Frame extends JFrame {
             createGamePanel();
         }
     }
+
+    // refreshes Panel
+    public void updatePanel() {
+        gamePanel.repaint();
+    }
 }

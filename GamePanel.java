@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class GamePanel extends JPanel implements ActionListener {
     static final int panelWidth = 600;
-    static final int panelHieght = 600;
+    static final int panelHeight = 600;
     static final int snakeWidth = 20;
     static final int appleSize = 20;
 
@@ -17,7 +17,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     GamePanel() {
         random = new Random();
-        super.setBounds(0, 0, panelWidth, panelHieght);
+        super.setBounds(0, 0, panelWidth, panelHeight);
         super.setBackground(Color.blue);
         this.setFocusable(true);
         apple.newApple();
@@ -32,6 +32,38 @@ public class GamePanel extends JPanel implements ActionListener {
         public void newApple() {
             XCoordinate = random.nextInt((int) ((panelWidth / appleSize) - 1)) * appleSize;
             YCoordinate = random.nextInt((int) ((panelWidth / appleSize) - 1)) * appleSize;
+        }
+    }
+
+    public class Snake {
+        // represents each segment of the snake
+        class SnakeSegment extends JPanel {
+            int xCoordSS;
+            int yCoordSS;
+
+            SnakeSegment(int xCoord, int yCoord) {
+                xCoordSS = xCoord;
+                yCoordSS = yCoord;
+            }
+
+            SnakeSegment() {
+
+            }
+
+        }
+
+        // String that represents the direction of the snake ("Up", "Right", "Down", or
+        // "Left")
+        String direction;
+
+        // Array of all snake segments. Represents the full snake. First element
+        // represents the 'head' of the snake and the last represents the 'tail'
+        SnakeSegment snakeSegmentList[];
+
+        Snake() {
+            snakeSegmentList = new SnakeSegment[(panelWidth * panelHeight) / (snakeWidth * snakeWidth)];
+            SnakeSegment head = new SnakeSegment(300, 300);
+            snakeSegmentList[0] = head;
         }
     }
 
