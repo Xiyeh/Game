@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.util.Random;
 
 import java.awt.*;
+import java.util.LinkedList;
 
 public class GamePanel extends JPanel implements ActionListener {
     static final int panelWidth = 600;
@@ -12,9 +13,10 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int snakeWidth = 20;
     static final int appleSize = 20;
     static final int numOfGrid = (panelWidth * panelHeight) / (snakeWidth * snakeWidth);
+    static final boolean gameOver = false;
 
     Random random;
-    Apple apple = new Apple();
+    Apple apple;
     Snake snake;
 
     GamePanel() {
@@ -22,7 +24,10 @@ public class GamePanel extends JPanel implements ActionListener {
         super.setBounds(0, 0, panelWidth, panelHeight);
         super.setBackground(Color.blue);
         this.setFocusable(true);
+
+        apple = new Apple();
         apple.newApple();
+
         snake = new Snake();
         // super.add(apple);
         setVisible(true);
@@ -58,12 +63,12 @@ public class GamePanel extends JPanel implements ActionListener {
 
         // Array of all snake segments. Represents the full snake. First element
         // represents the 'head' of the snake and the last represents the 'tail'
-        SnakeSegment snakeSegmentList[];
+        LinkedList<SnakeSegment> segments;
 
         Snake() {
-            snakeSegmentList = new SnakeSegment[numOfGrid];
+            segments = new LinkedList<SnakeSegment>();
             SnakeSegment head = new SnakeSegment(300, 300);
-            snakeSegmentList[0] = head;
+            segments.addFirst(head);
             direction = "Right";
             repaint();
         }
@@ -71,14 +76,11 @@ public class GamePanel extends JPanel implements ActionListener {
         // Loops through snakeSegmentList[] and draws each segment
         public void paintComponent(Graphics g) {
             SnakeSegment tempSegment;
-            for (int i = 0; i < numOfGrid; i++) {
-                if (snakeSegmentList[i] == null) {
-                    break;
-                }
-                tempSegment = snakeSegmentList[i];
+            for (int i = 0; i < segments.size(); i++) {
+                tempSegment = segments.get(i);
                 tempSegment.g2d = (Graphics2D) g;
                 tempSegment.g2d.setColor(Color.green);
-                snakeSegmentList[i].g2d.fillRect(tempSegment.xCoordSS, tempSegment.yCoordSS, snakeWidth, snakeWidth);
+                segments.get(i).g2d.fillRect(tempSegment.xCoordSS, tempSegment.yCoordSS, snakeWidth, snakeWidth);
 
             }
         }
