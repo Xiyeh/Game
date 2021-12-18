@@ -11,9 +11,10 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int panelHeight = 600;
     static final int snakeSize = 20;
     static final int appleSize = 20;
-    static final int DELAY = 175;
+    static final int increment = 5;
+    static final int DELAY = 100;
     static final int numOfGrid = (panelWidth * panelHeight) / (snakeSize * snakeSize);
-    static boolean gameOver = false;
+    static boolean gameRunning = false;
     Timer timer;
     Random random;
     Apple apple;
@@ -25,11 +26,15 @@ public class GamePanel extends JPanel implements ActionListener {
         super.setBackground(Color.BLACK);
         this.setFocusable(true);
         setVisible(true);
+        startGame();
+    }
+
+    public void startGame() {
+        gameRunning = true;
         timer = new Timer(DELAY, this);
         timer.start();
         newApple();
-        snake = new Snake();
-        snake.updateSnake();
+        newSnake();
     }
 
     public class Apple {
@@ -53,19 +58,22 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public class Snake {
-        int applesEaten = 0;
-        int segments = 3;
-        String direction = "Right";
+        int applesEaten;
+        int segments;
+        String direction;
         final int[] snakeXCoordinates = new int[numOfGrid];
         final int[] snakeYCoordinates = new int[numOfGrid];
 
         Snake() {
-            snakeXCoordinates[0] = 300;
-            snakeXCoordinates[1] = 280;
-            snakeXCoordinates[2] = 260;
-            snakeYCoordinates[0] = 300;
-            snakeYCoordinates[1] = 300;
-            snakeYCoordinates[2] = 300;
+            applesEaten = 0;
+            segments = 3;
+            direction = "Right";
+            snakeXCoordinates[0] = 40;
+            snakeXCoordinates[1] = 20;
+            snakeXCoordinates[2] = 0;
+            snakeYCoordinates[0] = 0;
+            snakeYCoordinates[1] = 0;
+            snakeYCoordinates[2] = 0;
         }
 
         public void paintComponent(Graphics g) {
@@ -77,20 +85,20 @@ public class GamePanel extends JPanel implements ActionListener {
         }
 
         public void updateSnake() {
-
             for (int i = segments; i > 0; i--) {
                 snakeXCoordinates[i] = snakeXCoordinates[i - 1];
                 snakeYCoordinates[i] = snakeYCoordinates[i - 1];
             }
-
             if (direction == "Right") {
                 snakeXCoordinates[0] = snakeXCoordinates[0] + snakeSize;
             }
-
         }
     }
 
-    // @Override
+    public void newSnake() {
+        snake = new Snake();
+    }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         apple.paintComponent(g);

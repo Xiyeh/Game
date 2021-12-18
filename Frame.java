@@ -36,7 +36,6 @@ public class Frame extends JFrame {
         this.titleScreenPanel.exitButtonPanel.setVisible(false);
         gamePanel = new GamePanel();
         this.add(gamePanel);
-        super.setVisible(true);
 
     }
 
@@ -44,10 +43,5 @@ public class Frame extends JFrame {
         public void actionPerformed(ActionEvent event) {
             createGamePanel();
         }
-    }
-
-    // refreshes Panel
-    public void updatePanel() {
-        gamePanel.repaint();
     }
 }
