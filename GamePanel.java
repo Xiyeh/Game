@@ -5,46 +5,46 @@ import java.awt.Color;
 import java.util.Random;
 
 import java.awt.*;
-import java.util.LinkedList;
 
 public class GamePanel extends JPanel implements ActionListener {
     static final int panelWidth = 600;
     static final int panelHeight = 600;
-    static final int snakeWidth = 20;
+    static final int snakeSize = 20;
     static final int appleSize = 20;
-    static final int numOfGrid = (panelWidth * panelHeight) / (snakeWidth * snakeWidth);
+    static final int DELAY = 175;
+    static final int numOfGrid = (panelWidth * panelHeight) / (snakeSize * snakeSize);
     static boolean gameOver = false;
-
+    Timer timer;
     Random random;
     Apple apple;
     Snake snake;
-    String direction;
 
     GamePanel() {
         random = new Random();
         super.setBounds(0, 0, panelWidth, panelHeight);
         super.setBackground(Color.BLACK);
         this.setFocusable(true);
-
-        apple = new Apple();
-
-        snake = new Snake();
         setVisible(true);
+        timer = new Timer(DELAY, this);
+        timer.start();
+        newApple();
+        snake = new Snake();
+        snake.updateSnake();
     }
 
     public class Apple {
-        int XCoordinate;
-        int YCoordinate;
+        int appleXCoordinate;
+        int appleYCoordinate;
 
         Apple() {
-            XCoordinate = random.nextInt((int) (panelWidth / appleSize)) * appleSize;
-            YCoordinate = random.nextInt((int) (panelWidth / appleSize)) * appleSize;
+            appleXCoordinate = random.nextInt((int) (panelWidth / appleSize)) * appleSize;
+            appleYCoordinate = random.nextInt((int) (panelWidth / appleSize)) * appleSize;
         }
 
         public void paintComponent(Graphics g) {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setColor(Color.red);
-            g2d.fillRect(apple.XCoordinate, apple.YCoordinate, appleSize, appleSize);
+            g2d.fillRect(apple.appleXCoordinate, apple.appleYCoordinate, appleSize, appleSize);
         }
     }
 
@@ -53,85 +53,44 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public class Snake {
-        // represents each segment of the snake
-        class SnakeSegment extends JPanel {
-            public int xCoordSS;
-            public int yCoordSS;
-            Graphics2D g2d;
-
-            SnakeSegment(int xCoord, int yCoord) {
-                xCoordSS = xCoord;
-                yCoordSS = yCoord;
-            }
-
-        }
-
-        LinkedList<SnakeSegment> segments;
+        int applesEaten = 0;
+        int segments = 3;
+        String direction = "Right";
+        final int[] snakeXCoordinates = new int[numOfGrid];
+        final int[] snakeYCoordinates = new int[numOfGrid];
 
         Snake() {
-            segments = new LinkedList<SnakeSegment>();
-            SnakeSegment head = new SnakeSegment(300, 300);
-            ///
-            SnakeSegment b1 = new SnakeSegment(280, 300);
-            SnakeSegment b2 = new SnakeSegment(260, 300);
-            segments.add(b1);
-            segments.add(b2);
-            ///
-            segments.addFirst(head);
-            direction = "Right";
-
-            // while (!gameOver) {
-            //     updateSnake();
-            //     try {
-            //         wait(500);
-            //     }
-                
-            // }
-            // repaint();
+            snakeXCoordinates[0] = 300;
+            snakeXCoordinates[1] = 280;
+            snakeXCoordinates[2] = 260;
+            snakeYCoordinates[0] = 300;
+            snakeYCoordinates[1] = 300;
+            snakeYCoordinates[2] = 300;
         }
 
-        // Loops through snakeSegmentList[] and draws each segment
         public void paintComponent(Graphics g) {
-            SnakeSegment tempSegment;
-            for (int i = 0; i < segments.size(); i++) {
-                tempSegment = segments.get(i);
-                tempSegment.g2d = (Graphics2D) g;
-                tempSegment.g2d.setColor(Color.green);
-                segments.get(i).g2d.fillRect(tempSegment.xCoordSS, tempSegment.yCoordSS, snakeWidth, snakeWidth);
-
+            Graphics2D g2d = (Graphics2D) g;
+            for (int i = 0; i < segments; i++) {
+                g2d.setColor(Color.green);
+                g2d.fillRect(snakeXCoordinates[i], snakeYCoordinates[i], snakeSize, snakeSize);
             }
+        }
+
+        public void updateSnake() {
+
+            for (int i = segments; i > 0; i--) {
+                snakeXCoordinates[i] = snakeXCoordinates[i - 1];
+                snakeYCoordinates[i] = snakeYCoordinates[i - 1];
+            }
+
+            if (direction == "Right") {
+                snakeXCoordinates[0] = snakeXCoordinates[0] + snakeSize;
+            }
+
         }
     }
 
-    // public void updateSnake() {
-    //     snake.segments.addFirst(snake.segments.getFirst() + snakeWidth);
-    //     int changeX;
-    //     int changeY;
-    //     if (direction.equals("Right")) {
-    //         changeX = snakeWidth;
-    //         changeY = 0;
-    //     } else if (direction.equals("Left")) {
-    //         changeX = -snakeWidth;
-    //         changeY = 0;
-    //     } else if (direction.equals("Down")) {
-    //         changeX = 0;
-    //         changeY = snakeWidth;
-    //     } else {
-    //         changeX = 0;
-    //         changeY = -snakeWidth;
-    //     }
-
-    //     for (int i = snake.segments.size(); i > 0; i--) {
-    //         snake.segments.get(i).xCoordSS = snake.segments.get(i - 1).xCoordSS;
-    //     }
-
-    //     snake.SnakeSegment newHead = new
-    //     snake.SnakeSegment(snake.segments.getFirst().xCoordSS + changeX,
-    //     snake.segments.getFirst().yCoordSS + changeY)
-    //     snake.segments.addFirst(newHead);
-    //     repaint();
-    // }
-
+    // @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         apple.paintComponent(g);
@@ -139,6 +98,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        snake.updateSnake();
         repaint();
     }
 
