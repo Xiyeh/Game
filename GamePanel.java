@@ -32,8 +32,8 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void startGame() {
         gameRunning = true;
-        //timer = new Timer(DELAY, this);
-        //timer.start();
+        timer = new Timer(DELAY, this);
+        timer.start();
         newApple();
         newSnake();
     }
@@ -69,10 +69,10 @@ public class GamePanel extends JPanel implements ActionListener {
             applesEaten = 0;
             segments = 3;
             direction = "Right";
-            snakeXCoordinates[0] = 580;
+            snakeXCoordinates[0] = 300;
             snakeXCoordinates[1] = 280;
             snakeXCoordinates[2] = 260;
-            snakeYCoordinates[0] = 580;
+            snakeYCoordinates[0] = 300;
             snakeYCoordinates[1] = 300;
             snakeYCoordinates[2] = 300;
         }
@@ -93,6 +93,28 @@ public class GamePanel extends JPanel implements ActionListener {
             if (direction == "Right") {
                 snakeXCoordinates[0] = snakeXCoordinates[0] + snakeSize;
             }
+
+            detectCollision();
+        }
+
+        // Checks if snake collides with boundary or with itself
+        public void detectCollision() {
+            if (snakeXCoordinates[0] < 0 || snakeXCoordinates[0] >= panelWidth) {
+                gameRunning = false;
+            } else if (snakeYCoordinates[0] < 0 || snakeYCoordinates[0] >= panelHeight) {
+                gameRunning = false;
+            } else if (segments >= 4) { // checks if snake collides with itself
+                for (int i = 1; i < segments; i++) {
+                    if (snakeXCoordinates[0] == snakeXCoordinates[i] && snakeYCoordinates[0] == snakeYCoordinates[i]) {
+                        gameRunning = false;
+                        break;
+                    }
+                }
+            }
+
+            if (!gameRunning) {
+                timer.stop();
+            }
         }
     }
 
@@ -108,7 +130,8 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         snake.updateSnake();
-        repaint();
+        if (gameRunning) {
+            repaint();
+        }
     }
-
 }
