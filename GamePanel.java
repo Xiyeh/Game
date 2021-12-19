@@ -13,7 +13,7 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int snakeSize = 20;
     static final int appleSize = 20;
     static final int increment = 5;
-    static final int DELAY = 100;
+    static final int DELAY = 75;
     static final int numOfGrid = (panelWidth * panelHeight) / (snakeSize * snakeSize);
     boolean gameRunning = false;
     int highScore = 0;
@@ -27,6 +27,7 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setPreferredSize(new Dimension(panelWidth, panelHeight));
         super.setBackground(Color.blue);
         this.setFocusable(true);
+        this.addKeyListener(new GameKeyAdapter());
         setVisible(true);
         startGame();
     }
@@ -96,9 +97,9 @@ public class GamePanel extends JPanel implements ActionListener {
             } else if (direction == "Left") {
                 snakeXCoordinates[0] = snakeXCoordinates[0] - snakeSize;
             } else if (direction == "Up") {
-                snakeYCoordinates[0] = snakeYCoordinates[0] + snakeSize;
-            } else if (direction == "Down") {
                 snakeYCoordinates[0] = snakeYCoordinates[0] - snakeSize;
+            } else if (direction == "Down") {
+                snakeYCoordinates[0] = snakeYCoordinates[0] + snakeSize;
             }
 
             detectCollision();
@@ -152,22 +153,22 @@ public class GamePanel extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_W:
-                    if (snake.direction != "Down") {
+                    if (!(snake.direction.equals("Down"))) {
                         snake.direction = "Up";
                     }
                     break;
                 case KeyEvent.VK_S:
-                    if (snake.direction != "Up") {
+                    if (!(snake.direction.equals("Up"))) {
                         snake.direction = "Down";
                     }
                     break;
                 case KeyEvent.VK_D:
-                    if (snake.direction != "Left") {
+                    if (!(snake.direction.equals("Left"))) {
                         snake.direction = "Right";
                     }
                     break;
                 case KeyEvent.VK_A:
-                    if (snake.direction != "Right") {
+                    if (!(snake.direction.equals("Right"))) {
                         snake.direction = "Left";
                     }
                     break;

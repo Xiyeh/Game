@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 
 public class Frame extends JFrame {
     // Container container;
-    static final int DELAY = 1000;
+    static final int DELAY = 100;
     TitleScreenPanel titleScreenPanel;
     GamePanel gamePanel;
     TitleScreenListener titleScreenListener = new TitleScreenListener();
@@ -53,6 +53,12 @@ public class Frame extends JFrame {
 
     public void createGameOverPanel() {
         this.gamePanel.setVisible(false);
+
+    }
+
+    // deletes all panels
+    public void removeAll() {
+
     }
 
     public class TitleScreenListener implements ActionListener {
