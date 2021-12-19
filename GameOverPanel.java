@@ -4,14 +4,17 @@ import java.awt.*;
 
 public class GameOverPanel extends JPanel {
     JButton titleScreenButton;
+    int score;
 
-    GameOverPanel() {
+    GameOverPanel(int score) {
+        this.score = score;
         this.setPreferredSize(new Dimension(600, 600));
         super.setBackground(Color.black);
         repaint();
         titleScreenButton = new JButton("Back to Titlescreen");
         titleScreenButton.setFont(new Font("Papyrus", Font.BOLD, 40));
-        this.add(titleScreenButton);
+        this.setLayout(new GridBagLayout());
+        this.add(titleScreenButton, new GridBagConstraints());
         this.setVisible(true);
     }
 
@@ -19,6 +22,9 @@ public class GameOverPanel extends JPanel {
         super.paintComponent(g);
         g.setColor(Color.RED);
         g.setFont(new Font("Papyrus", Font.BOLD, 60));
-        g.drawString("Game Over", 170, 200);
+        g.drawString("Game Over", 130, 100);
+        g.setFont(new Font("Papyrus", Font.BOLD, 40));
+        g.setColor(Color.green);
+        g.drawString("Score: " + score, 225, 200);
     }
 }

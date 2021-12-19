@@ -53,7 +53,7 @@ public class Frame extends JFrame {
     public void createGameOverPanel() {
         highScore = gamePanel.highScore;
         this.getContentPane().remove(gamePanel);
-        gameOverPanel = new GameOverPanel();
+        gameOverPanel = new GameOverPanel(highScore);
         this.add(gameOverPanel);
         gameOverPanel.titleScreenButton.addActionListener(backToTitleScreen);
 
