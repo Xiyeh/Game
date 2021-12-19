@@ -3,6 +3,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.util.Random;
+import java.awt.event.*;
 
 import java.awt.*;
 
@@ -92,6 +93,12 @@ public class GamePanel extends JPanel implements ActionListener {
             }
             if (direction == "Right") {
                 snakeXCoordinates[0] = snakeXCoordinates[0] + snakeSize;
+            } else if (direction == "Left") {
+                snakeXCoordinates[0] = snakeXCoordinates[0] - snakeSize;
+            } else if (direction == "Up") {
+                snakeYCoordinates[0] = snakeYCoordinates[0] + snakeSize;
+            } else if (direction == "Down") {
+                snakeYCoordinates[0] = snakeYCoordinates[0] - snakeSize;
             }
 
             detectCollision();
@@ -121,6 +128,8 @@ public class GamePanel extends JPanel implements ActionListener {
     public void checkGameOver() {
         if (!gameRunning) {
             timer.stop();
+            this.removeAll();
+
         }
     }
 
@@ -135,6 +144,34 @@ public class GamePanel extends JPanel implements ActionListener {
         checkGameOver();
         if (gameRunning) {
             repaint();
+        }
+    }
+
+    public class GameKeyAdapter extends KeyAdapter {
+        @Override
+        public void keyPressed(KeyEvent e) {
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_W:
+                    if (snake.direction != "Down") {
+                        snake.direction = "Up";
+                    }
+                    break;
+                case KeyEvent.VK_S:
+                    if (snake.direction != "Up") {
+                        snake.direction = "Down";
+                    }
+                    break;
+                case KeyEvent.VK_D:
+                    if (snake.direction != "Left") {
+                        snake.direction = "Right";
+                    }
+                    break;
+                case KeyEvent.VK_A:
+                    if (snake.direction != "Right") {
+                        snake.direction = "Left";
+                    }
+                    break;
+            }
         }
     }
 }
