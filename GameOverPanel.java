@@ -23,8 +23,8 @@ public class GameOverPanel extends JPanel {
         g.setColor(Color.RED);
         g.setFont(new Font("Papyrus", Font.BOLD, 60));
         g.drawString("Game Over", 130, 100);
-        g.setFont(new Font("Papyrus", Font.BOLD, 40));
+        g.setFont(new Font("Papyrus", Font.BOLD, 50));
         g.setColor(Color.green);
-        g.drawString("Score: " + score, 225, 200);
+        g.drawString("Score: " + score, 200, 200);
     }
 }
