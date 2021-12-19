@@ -13,20 +13,25 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int snakeWidth = 20;
     static final int appleSize = 20;
     static final int numOfGrid = (panelWidth * panelHeight) / (snakeWidth * snakeWidth);
+    static final int DELAY = 400;
     static boolean gameOver = false;
 
     Random random;
     Apple apple;
-    Snake snake = new Snake();
+    Snake snake;
     String direction;
+    Timer timer;
 
     GamePanel() {
         random = new Random();
         super.setBounds(0, 0, panelWidth, panelHeight);
         super.setBackground(Color.BLACK);
         this.setFocusable(true);
-
+        setVisible(true);
+        timer = new Timer(DELAY, this);
+        timer.start();
         apple = new Apple();
+        snake = new Snake();
         setVisible(true);
     }
 
@@ -73,10 +78,10 @@ public class GamePanel extends JPanel implements ActionListener {
 
         Snake() {
             segments = new LinkedList<SnakeSegment>();
-            SnakeSegment head = new SnakeSegment(300, 300);
+            SnakeSegment head = new SnakeSegment(100, 100);
             ///
-            SnakeSegment b1 = new SnakeSegment(280, 300);
-            SnakeSegment b2 = new SnakeSegment(260, 300);
+            SnakeSegment b1 = new SnakeSegment(80, 100);
+            SnakeSegment b2 = new SnakeSegment(60, 100);
             segments.add(b1);
             segments.add(b2);
             ///
@@ -105,12 +110,6 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void updateSnake() {
-        try {
-            System.out.println("LOOP");
-            Thread.sleep(50);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
         int changeX;
         int changeY;
         if (direction.equals("Right")) {
@@ -145,6 +144,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        updateSnake();
         repaint();
     }
 
