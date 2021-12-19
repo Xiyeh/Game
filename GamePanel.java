@@ -111,15 +111,17 @@ public class GamePanel extends JPanel implements ActionListener {
                     }
                 }
             }
-
-            if (!gameRunning) {
-                timer.stop();
-            }
         }
     }
 
     public void newSnake() {
         snake = new Snake();
+    }
+
+    public void checkGameOver() {
+        if (!gameRunning) {
+            timer.stop();
+        }
     }
 
     public void paintComponent(Graphics g) {
@@ -130,6 +132,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         snake.updateSnake();
+        checkGameOver();
         if (gameRunning) {
             repaint();
         }

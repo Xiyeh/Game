@@ -3,12 +3,15 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.*;
 
 public class Frame extends JFrame {
     // Container container;
+    static final int DELAY = 1000;
     TitleScreenPanel titleScreenPanel;
     GamePanel gamePanel;
     TitleScreenListener titleScreenListener = new TitleScreenListener();
+    Timer timer;
 
     Frame() {
         super.setTitle("Snake Game");
@@ -27,7 +30,6 @@ public class Frame extends JFrame {
         this.add(titleScreenPanel.exitButtonPanel);
         titleScreenPanel.startButton.addActionListener(titleScreenListener);
         titleScreenPanel.exitButton.addActionListener((event) -> System.exit(0));
-        
     }
 
     public void createGamePanel() {
@@ -40,7 +42,10 @@ public class Frame extends JFrame {
         this.add(gamePanel);
         this.pack();
         this.setVisible(true);
+    }
 
+    public void createGameOverPanel() {
+        this.gamePanel.setVisible(false);
     }
 
     public class TitleScreenListener implements ActionListener {
