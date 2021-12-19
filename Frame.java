@@ -76,6 +76,7 @@ public class Frame extends JFrame {
     public void checkGameOver() {
         if (gamePanel.gameRunning == false) {
             createGameOverPanel();
+            System.out.println("GAME OVER DETECTED");
             titleScreenPanel.changeHighScore(gamePanel.highScore);
         }
     }

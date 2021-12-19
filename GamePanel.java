@@ -13,7 +13,7 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int snakeSize = 20;
     static final int appleSize = 20;
     static final int increment = 5;
-    static final int DELAY = 75;
+    static final int DELAY = 50;
     static final int numOfGrid = (panelWidth * panelHeight) / (snakeSize * snakeSize);
     boolean gameRunning = false;
     int highScore = 0;
@@ -36,8 +36,8 @@ public class GamePanel extends JPanel implements ActionListener {
         gameRunning = true;
         timer = new Timer(DELAY, this);
         timer.start();
-        newApple();
         newSnake();
+        newApple();
     }
 
     public class Apple {
@@ -47,6 +47,7 @@ public class GamePanel extends JPanel implements ActionListener {
         Apple() {
             appleXCoordinate = random.nextInt((int) (panelWidth / appleSize) - 1) * appleSize;
             appleYCoordinate = random.nextInt((int) (panelWidth / appleSize) - 1) * appleSize;
+
         }
 
         public void paintComponent(Graphics g) {
@@ -58,6 +59,12 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void newApple() {
         apple = new Apple();
+        for (int i = 0; i < snake.segments; i++) {
+            if (apple.appleXCoordinate == snake.snakeXCoordinates[i]
+                    && apple.appleYCoordinate == snake.snakeYCoordinates[i]) {
+                newApple();
+            }
+        }
     }
 
     public class Snake {
@@ -103,6 +110,7 @@ public class GamePanel extends JPanel implements ActionListener {
             }
 
             detectCollision();
+            detectAppleCollision();
         }
 
         // Checks if snake collides with boundary or with itself
@@ -119,6 +127,23 @@ public class GamePanel extends JPanel implements ActionListener {
                     }
                 }
             }
+        }
+    }
+
+    public void increaseSnake() {
+        for (int i = 0; i < 3; i++) {
+            snake.snakeXCoordinates[snake.segments + i] = snake.snakeXCoordinates[snake.segments - 1];
+            snake.snakeYCoordinates[snake.segments + i] = snake.snakeYCoordinates[snake.segments - 1];
+        }
+        snake.segments += 3;
+    }
+
+    public void detectAppleCollision() {
+        if (snake.snakeXCoordinates[0] == apple.appleXCoordinate
+                && snake.snakeYCoordinates[0] == apple.appleYCoordinate) {
+            snake.applesEaten++;
+            newApple();
+            increaseSnake();
         }
     }
 
