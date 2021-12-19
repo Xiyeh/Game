@@ -4,6 +4,9 @@ import javax.swing.JFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.*;
+import javax.swing.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Frame extends JFrame {
     // Container container;
@@ -11,6 +14,7 @@ public class Frame extends JFrame {
     TitleScreenPanel titleScreenPanel;
     GamePanel gamePanel;
     TitleScreenListener titleScreenListener = new TitleScreenListener();
+    EndGameListener endGameListener = new EndGameListener();
     Timer timer;
 
     Frame() {
@@ -42,6 +46,9 @@ public class Frame extends JFrame {
         this.add(gamePanel);
         this.pack();
         this.setVisible(true);
+
+        timer = new Timer(DELAY, endGameListener);
+        timer.start();
     }
 
     public void createGameOverPanel() {
@@ -51,6 +58,19 @@ public class Frame extends JFrame {
     public class TitleScreenListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             createGamePanel();
+        }
+    }
+
+    public class EndGameListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            checkGameOver();
+        }
+    }
+
+    public void checkGameOver() {
+        if (gamePanel.gameRunning == false) {
+            createGameOverPanel();
+            titleScreenPanel.changeHighScore(gamePanel.highScore);
         }
     }
 }
