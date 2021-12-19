@@ -15,6 +15,7 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int DELAY = 100;
     static final int numOfGrid = (panelWidth * panelHeight) / (snakeSize * snakeSize);
     static boolean gameRunning = false;
+    int highScore = 0;
     Timer timer;
     Random random;
     Apple apple;
@@ -22,8 +23,8 @@ public class GamePanel extends JPanel implements ActionListener {
 
     GamePanel() {
         random = new Random();
-        super.setBounds(0, 0, panelWidth, panelHeight);
-        super.setBackground(Color.BLACK);
+        this.setPreferredSize(new Dimension(panelWidth, panelHeight));
+        super.setBackground(Color.blue);
         this.setFocusable(true);
         setVisible(true);
         startGame();
@@ -31,8 +32,8 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void startGame() {
         gameRunning = true;
-        timer = new Timer(DELAY, this);
-        timer.start();
+        //timer = new Timer(DELAY, this);
+        //timer.start();
         newApple();
         newSnake();
     }
@@ -42,8 +43,8 @@ public class GamePanel extends JPanel implements ActionListener {
         int appleYCoordinate;
 
         Apple() {
-            appleXCoordinate = random.nextInt((int) (panelWidth / appleSize)) * appleSize;
-            appleYCoordinate = random.nextInt((int) (panelWidth / appleSize)) * appleSize;
+            appleXCoordinate = random.nextInt((int) (panelWidth / appleSize) - 1) * appleSize;
+            appleYCoordinate = random.nextInt((int) (panelWidth / appleSize) - 1) * appleSize;
         }
 
         public void paintComponent(Graphics g) {
@@ -68,12 +69,12 @@ public class GamePanel extends JPanel implements ActionListener {
             applesEaten = 0;
             segments = 3;
             direction = "Right";
-            snakeXCoordinates[0] = 40;
-            snakeXCoordinates[1] = 20;
-            snakeXCoordinates[2] = 0;
-            snakeYCoordinates[0] = 0;
-            snakeYCoordinates[1] = 0;
-            snakeYCoordinates[2] = 0;
+            snakeXCoordinates[0] = 580;
+            snakeXCoordinates[1] = 280;
+            snakeXCoordinates[2] = 260;
+            snakeYCoordinates[0] = 580;
+            snakeYCoordinates[1] = 300;
+            snakeYCoordinates[2] = 300;
         }
 
         public void paintComponent(Graphics g) {

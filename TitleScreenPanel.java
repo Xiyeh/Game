@@ -21,7 +21,6 @@ public class TitleScreenPanel {
     Font highScoreLabelFont = new Font("Papyrus", Font.BOLD, 50);
     Font ButtonFont = new Font("Papyrus", Font.BOLD, 40);
     JButton startButton, exitButton;
-    int highScore = 0;
 
     TitleScreenPanel() {
         titlePanel = new JPanel();
@@ -35,7 +34,7 @@ public class TitleScreenPanel {
         highScorePanel = new JPanel();
         highScorePanel.setBounds(75, 175, 425, 100);
         highScorePanel.setBackground(Color.blue);
-        highScoreLabel = new JLabel("High Score : " + String.valueOf(highScore));
+        highScoreLabel = new JLabel("High Score : " + String.valueOf(0));
         highScoreLabel.setForeground(Color.black);
         highScoreLabel.setFont(highScoreLabelFont);
         highScorePanel.add(highScoreLabel);

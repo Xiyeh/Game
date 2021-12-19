@@ -1,5 +1,5 @@
 import java.awt.Color;
-
+import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +27,7 @@ public class Frame extends JFrame {
         this.add(titleScreenPanel.exitButtonPanel);
         titleScreenPanel.startButton.addActionListener(titleScreenListener);
         titleScreenPanel.exitButton.addActionListener((event) -> System.exit(0));
+        
     }
 
     public void createGamePanel() {
@@ -34,8 +35,11 @@ public class Frame extends JFrame {
         this.titleScreenPanel.highScorePanel.setVisible(false);
         this.titleScreenPanel.startButtonPanel.setVisible(false);
         this.titleScreenPanel.exitButtonPanel.setVisible(false);
+        super.setLayout(new BorderLayout());
         gamePanel = new GamePanel();
         this.add(gamePanel);
+        this.pack();
+        this.setVisible(true);
 
     }
 
