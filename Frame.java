@@ -12,7 +12,9 @@ public class Frame extends JFrame {
     GamePanel gamePanel;
     TitleScreenListener titleScreenListener = new TitleScreenListener();
     EndGameListener endGameListener = new EndGameListener();
+    BackToTitleScreen backToTitleScreen = new BackToTitleScreen();
     Timer timer;
+    GameOverPanel gameOverPanel;
 
     Frame() {
         super.setTitle("Snake Game");
@@ -51,8 +53,19 @@ public class Frame extends JFrame {
     public void createGameOverPanel() {
         highScore = gamePanel.highScore;
         this.getContentPane().remove(gamePanel);
-        this.add(new GameOverPanel());
+        gameOverPanel = new GameOverPanel();
+        this.add(gameOverPanel);
+        gameOverPanel.titleScreenButton.addActionListener(backToTitleScreen);
+
         this.setVisible(true);
+    }
+
+    void backToTitleScreen() {
+        this.getContentPane().remove(gameOverPanel);
+        this.titleScreenPanel.titlePanel.setVisible(true);
+        this.titleScreenPanel.highScorePanel.setVisible(true);
+        this.titleScreenPanel.startButtonPanel.setVisible(true);
+        this.titleScreenPanel.exitButtonPanel.setVisible(true);
     }
 
     public class TitleScreenListener implements ActionListener {
@@ -67,12 +80,19 @@ public class Frame extends JFrame {
         }
     }
 
+    public class BackToTitleScreen implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            backToTitleScreen();
+        }
+
+    }
+
     public void checkGameOver() {
         if (gamePanel.gameRunning == false) {
             System.out.println("GAME OVER DETECTED");
+            timer.stop();
             createGameOverPanel();
             titleScreenPanel.changeHighScore(gamePanel.highScore);
-            timer.stop();
         }
     }
 }

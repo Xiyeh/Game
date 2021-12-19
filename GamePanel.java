@@ -123,6 +123,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 for (int i = 1; i < segments; i++) {
                     if (snakeXCoordinates[0] == snakeXCoordinates[i] && snakeYCoordinates[0] == snakeYCoordinates[i]) {
                         gameRunning = false;
+                        System.out.println("COLLISION DETECTED");
                         break;
                     }
                 }
