@@ -14,7 +14,7 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int increment = 5;
     static final int DELAY = 100;
     static final int numOfGrid = (panelWidth * panelHeight) / (snakeSize * snakeSize);
-    static boolean gameRunning = false;
+    boolean gameRunning = false;
     int highScore = 0;
     Timer timer;
     Random random;
