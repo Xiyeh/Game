@@ -1,16 +1,13 @@
-import java.awt.Color;
-import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class Frame extends JFrame {
     // Container container;
     static final int DELAY = 100;
+    int highScore = 0;
     TitleScreenPanel titleScreenPanel;
     GamePanel gamePanel;
     TitleScreenListener titleScreenListener = new TitleScreenListener();
@@ -52,13 +49,10 @@ public class Frame extends JFrame {
     }
 
     public void createGameOverPanel() {
-        this.gamePanel.setVisible(false);
-
-    }
-
-    // deletes all panels
-    public void removeAll() {
-
+        highScore = gamePanel.highScore;
+        this.getContentPane().remove(gamePanel);
+        this.add(new GameOverPanel());
+        this.setVisible(true);
     }
 
     public class TitleScreenListener implements ActionListener {
@@ -75,9 +69,10 @@ public class Frame extends JFrame {
 
     public void checkGameOver() {
         if (gamePanel.gameRunning == false) {
-            createGameOverPanel();
             System.out.println("GAME OVER DETECTED");
+            createGameOverPanel();
             titleScreenPanel.changeHighScore(gamePanel.highScore);
+            timer.stop();
         }
     }
 }

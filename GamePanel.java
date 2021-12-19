@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements ActionListener {
     GamePanel() {
         random = new Random();
         this.setPreferredSize(new Dimension(panelWidth, panelHeight));
-        super.setBackground(Color.blue);
+        super.setBackground(Color.black);
         this.setFocusable(true);
         this.addKeyListener(new GameKeyAdapter());
         setVisible(true);
@@ -154,15 +154,23 @@ public class GamePanel extends JPanel implements ActionListener {
     public void checkGameOver() {
         if (!gameRunning) {
             timer.stop();
-            this.removeAll();
-
+            if (highScore < snake.applesEaten) {
+                highScore = snake.applesEaten;
+            }
         }
+    }
+
+    public void drawScore(Graphics g) {
+        g.setColor(Color.RED);
+        g.setFont(new Font("Papyrus", Font.BOLD, 50));
+        g.drawString("Score: " + String.valueOf(snake.applesEaten), 200, 50);
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         apple.paintComponent(g);
         snake.paintComponent(g);
+        drawScore(g);
     }
 
     public void actionPerformed(ActionEvent e) {
